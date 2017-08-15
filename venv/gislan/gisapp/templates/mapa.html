@@ -1,0 +1,121 @@
+{% load to_azpimarra %}
+<html>
+
+<head>
+	<meta charset="utf-8" />
+  <title>Gislan - Gisapp</title>
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'mapstyle.css' %}"/>
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css"
+   integrity="sha512-wcw6ts8Anuw10Mzh9Ytw4pylW8+NAD4ch3lqm9lzAsTxg0GFeJgoAtxuCLREZSC5lUXdVyo/7yfsqFjQ4S+aKw=="
+   crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet.js"
+   integrity="sha512-mNqn2Wg7tSToJhvHcqfzLMU6J4mkOImSPTxVZAdo+lcPlk+GhZmYgACEe0x35K7YzW1zJ7XyJV/TT1MrdXvMcA=="
+   crossorigin=""></script>
+</head>
+
+
+<body>
+
+
+
+<div id="mapid">
+</div>
+
+<script>
+
+
+var colors = ["rgba(0,0,0,1.0)", "rgba(255,0,0,1.0)", "rgba(0,255,0,1.0)", "rgba(0,0,255,1.0)", "rgba(255,255,0,1.0)", "rgba(0,255,255,1.0)", "rgba(255,0,255,1.0)", "rgba(192,192,192,1.0)", "rgba(128,128,128,1.0)","rgba(128,0,0,1.0)", "rgba(128,128,0,1.0)", "rgba(0,128,0,1.0)", "rgba(128,0,128,1.0)", "rgba(0,128,128,1.0)", "rgba(0,0,128,1.0)",];
+
+var mymap = L.map('mapid').setView([43.033715, -2.414059], 16);
+
+var i = 1;
+
+L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox.satellite',
+    accessToken: 'pk.eyJ1IjoidHJpa3V4YWJpIiwiYSI6ImNqMzQ0bnM5djAwNWYzM3BnbTN5OTZydTUifQ.UT3FBsjGdqH2NuG0JQuOJA'
+}).addTo(mymap);
+
+
+{% for dat in geojsonDatuak %}
+
+{% with dat.datu_izena|to_azpimarra as name %}
+{% with dat.datuak as gjkargatua %}
+
+
+
+
+function pop_{{ name }}(feature, layer) {
+    var popupContent = '<table>\
+    <tr>\
+      <td>Cool stuff</td>\
+    </tr>\
+  </table>';
+  layer.bindPopup(popupContent);
+}
+
+{% with 'pane_'|add:name as panela %}
+
+col = colors[i%15]
+
+function style_{{ name }}() {
+  return {
+    pane: {{ panela }},
+    radius: 4.0,
+    opacity: 1,
+    color: 'rgba(0,0,0,1.0)',
+    dashArray: '',
+    lineCap: 'butt',
+    lineJoin: 'miter',
+    weight: 1,
+    fillOpacity: 1,
+    fillColor: col,
+  }
+}
+
+map.createPane({{ panela }});
+map.getPane({{ panela }}).style.zIndex = 405;
+map.getPane({{ panela }}).style['mix-blend-mode'] = 'normal';
+var layer_{{ name }} = new L.geoJson(null, {
+  attribution: '<a href=""></a>',
+  pane: {{ panela }},
+  onEachFeature: pop_{{ name }},
+
+{% if 'MultiPoint' in gjkargatua %}
+  pointToLayer: function (feature, latlng) {
+    var context = {
+      feature: feature,
+      variables: {}
+    };
+    return L.circleMarker(latlng, style_{{ name }}(feature))
+  }
+
+{% elif 'MultiPolygon' in gjkargatua %}
+  style: style_{{ name }}
+
+
+{% endif %}
+
+
+
+});
+
+
+
+
+map.addLayer(layer_{{ name }});
+
+i++;
+
+
+{% endwith %}
+{% endwith %}
+{% endwith %}
+{% endfor %}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="zentratu">
+	<h2>ZURE KONEXIOAK</h2>
+
+	<div class="zerrendaElementua">
+	{% for konexioa in konexioak %}
+		
+  		{{ konexioa.konexio_izena|upper }}
+  		<span style="float:right;"><a href="/gisapp/menua/{{ konexioa.id }}/" class="linkbotoia">Ireki</a></span>
+  		<br>
+  	{% endfor %}
+  	<br>
+  	<a href="/gisapp/konexioberria/" class="botoiberria">Konexio berri bat sortu</a>
+  	</div>
+</div>
+{% endblock content %}

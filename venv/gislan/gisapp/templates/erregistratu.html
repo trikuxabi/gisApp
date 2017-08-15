@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Erregistroa{% endblock %}
+
+{% block content %}
+<div class="zentratu">
+<h2>ERREGISTROA</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Bidali</button>
+  </form>
+  </div>
+{% endblock %}

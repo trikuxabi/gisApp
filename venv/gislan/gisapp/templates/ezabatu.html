@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<script>
+  function ziurMezua(balioa){
+    document.getElementById(balioa).innerHTML = "<a class='linkBotoia'>Ezabatu</a> <a class='ezabatuBotoia'>Ezeztatu</a>";
+  }
+  </script>
+<div class="zentratu">
+	<h2>DATU-GERUZAK EZABATU</h2>
+
+	<div class="zerrendaElementua">
+	{% for datua in datuak %}
+		
+  		{{ datua.datu_izena|upper }}
+  		<span id="{{datua.datu_izena}}" style="float:right;"><a onClick="ziurMezua({{datua.datu_izena}})" class="ezabatuBotoia">Ezabatu</a></span>
+  		<br>
+  	{% endfor %}
+  	<br>
+  	<a href="/gisapp/menua/{{ konexioa.id }}" class="botoiberria">Itzuli</a>
+  	</div>
+</div>
+{% endblock content %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="menuNagusia">
+<h2> {{ konexioa.konexio_izena|upper }} </h2>
+	{% if gaitu %}
+		<div class="enabledMenu"><a href="/gisapp/mapa/{{ konexioa.id }}/"">KARGATUTAKO DATUAK BISTARATU</a></div>
+	{% else %}
+		<div class="disabledMenu">KARGATUTAKO DATUAK BISTARATU</div>
+	{% endif %}
+	<br>
+	<div class="enabledMenu"><a href="/gisapp/dbkarga/{{ konexioa.id }}/">DATU-BASETIK DATUAK KARGATU</a></div>
+	<br>
+	<div class="enabledMenu"><a href="/gisapp/fitxategi/{{ konexioa.id }}/">FITXATEGITIK DATUAK KARGATU</a></div>
+	<br>
+	{% if gaitu %}
+		<div class="enabledMenu"><a href="/gisapp/ezabatu/{{ konexioa.id }}/">KARGATUTAKO DATUAK EZABATU</a></div>
+	{% else %}
+		<div class="disabledMenu">KARGATUTAKO DATUAK EZABATU</div>
+	{% endif %}
+	
+
+
+</div>
+{% endblock content %}

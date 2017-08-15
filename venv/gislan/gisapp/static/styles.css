@@ -1,0 +1,214 @@
+body,h1,h2,p,a {
+	font-family: "Lato", sans-serif;
+}
+
+h2{
+	text-align: center;
+}
+
+
+body, html {
+    color: #777;
+    line-height: 1.8;
+    background-image: url("images/mapaFondo.jpg");
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100%;
+}
+
+main {
+	margin: 0px auto;
+	padding: 50px;
+}
+
+
+@keyframes opac {
+	0% {opacity:0;}
+	100% {opacity:1;}
+}
+
+
+
+
+.top {
+	position: fixed;
+	width: 100%;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	z-index: 1;
+	background-color: white;
+	margin: 0px auto;
+	padding: 0px;
+}
+
+
+.nabigazioElementua {
+	padding:8px 16px;
+	float:left;
+	width:auto;
+	border:none;
+	display:inline-block;
+	outline:0;
+	vertical-align:middle;
+	overflow:hidden;
+	text-decoration:none;
+	color:inherit;
+	text-align:center;
+	cursor:pointer;
+	transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nabigazioElementua:hover {
+	color:#fff!important;
+	background-color:#000!important;
+	transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+
+.gisapp{
+	cursor: default;
+	letter-spacing: 10px;
+	padding:12px 24px!important;
+	color:#fff!important;
+	background-color:#000!important;
+	font-size:48px!important;
+	transition: font-size, 0.3s ease, padding 0.3s ease;
+	animation-name: opac;
+	animation-duration: 3s;
+}
+
+
+.gisapp:hover{
+	font-size:72px!important;
+	padding:18px 36px!important;
+	transition: font-size 0.5s ease, padding 0.5s ease;
+}
+
+
+.erdiratu{
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform:translate(-50%,-50%);
+	-ms-transform:translate(-50%,-50%);
+}
+	
+.zentratu{
+	overflow-y: auto;
+	background-color: white;
+	padding: 15px;
+	width: 50%;
+	position: absolute;
+	left: 25%;
+	height: 70%
+}
+
+.zerrendaElementua {
+	margin: 0 auto;
+	max-width: 300px;
+}
+
+
+.linkbotoia {
+	text-decoration: none;
+	background-color: white;
+	color: black;
+	padding: 2px 6px 2px 6px;
+	border: 1px solid black;
+	transition: background-color 0.3s ease, color 0.3s ease;
+	
+}
+
+.linkbotoia:hover{
+	right: 0;
+	background-color: black;
+	color: white;
+	transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.ezabatuBotoia {
+	cursor: pointer;
+	text-decoration: none;
+	background-color: white;
+	color: red;
+	padding: 2px 6px 2px 6px;
+	border: 1px solid red;
+	transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.ezabatuBotoia:hover{
+	right: 0;
+	background-color: red;
+	color: white;
+	transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.botoiberria {
+	text-decoration: none;
+	text-align: center;
+	background-color: white;
+	color: black;
+	padding: 2px 6px 2px 6px;
+	border: 1px solid black;
+	transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.botoiberria:hover{
+	background-color: black;
+	color: white;
+	transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+.menuNagusia{
+	overflow-y: auto;
+	background-color: white;
+	padding: 50px;
+	width: 40%;
+	position: absolute;
+	left: 30%;
+	height: 70%
+	top: 50%;
+}
+
+.enabledMenu{
+	font-size: 125%;
+	text-decoration: none;
+	text-align: center;
+	background-color: white;
+	color: black;
+	padding: 10px;
+	border: 1px solid black;
+	transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.enabledMenu:hover{
+	background-color: black;
+	color: white;
+	transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.disabledMenu{
+	cursor: default;
+	font-size: 125%;
+	text-align: center;
+	background-color: #f2f2f2;
+	color: #c0c0c0;
+	padding: 10px;
+	border: 1px solid #c0c0c0;
+}
+
+.enabledMenu a {
+	display: block;
+	color: black;
+	text-decoration: none;
+}
+
+.enabledMenu:hover a {
+	display: block;
+	color: white;
+	transition: background-color 0.2s ease, color 0.2s ease;
+}

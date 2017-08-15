@@ -1,0 +1,206 @@
+<!-- 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="{% static 'qgis2web_expressions.js' %}"></script>
+<script src="{% static 'leaflet.js' %}"></script>
+<script src="{% static 'L.Control.Locate.min.js' %}"></script>
+<script src="{% static 'leaflet-heat.js' %}"></script>
+<script src="{% static 'leaflet.rotatedMarker.js' %}"></script>
+<script src="{% static 'OSMBuildings-Leaflet.js' %}"></script>
+<script src="{% static 'leaflet-hash.js' %}"></script>
+<script src="{% static 'leaflet-tilelayer-wmts.js' %}"></script>
+<script src="{% static 'Autolinker.min.js' %}"></script>
+<script src="{% static 'leaflet-measure.js' %}"></script>
+<script src="{% static 'leaflet.markercluster.js' %}"></script>
+<script src="{% static 'leaflet-search.js' %}"></script>
+<script src="{% static 'styledLayerControl.js' %}"></script>
+ -->
+
+
+
+
+
+
+
+
+/*
+
+	// var map = L.map('mapid').setView([43.033715, -2.414059], 15);
+	// L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+ //    attribution: 'GISAPP by <a href="http://www.twitter.com/trikuxabi">Xabi Linazasoro</a>',
+ //    maxZoom: 19,
+ //    id: 'mapbox.satellite',
+ //    accessToken: 'pk.eyJ1IjoidHJpa3V4YWJpIiwiYSI6ImNqMzQ0bnM5djAwNWYzM3BnbTN5OTZydTUifQ.UT3FBsjGdqH2NuG0JQuOJA'
+ //  }).addTo(map);
+
+
+ L.ImageOverlay.include({
+          getBounds: function () {
+            return this._bounds;
+          }
+        });
+        var map = L.map('map', {
+          zoomControl:true, maxZoom:27, minZoom:1
+        }).fitBounds([[43.1945149134,-2.06929016093],[43.209787148,-2.03202401597]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.addAttribution('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a>');
+        L.control.locate().addTo(map);
+        var measureControl = new L.Control.Measure({
+          primaryLengthUnit: 'meters',
+          secondaryLengthUnit: 'kilometers',
+          primaryAreaUnit: 'sqmeters',
+          secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        var bounds_group = new L.featureGroup([]);
+        var basemap = L.tileLayer('http://b5m.gipuzkoa.eus/api/1.0/es/osgeo/tms/tileset/1.0.0/map/{z}/{x}/{y}.png', {
+          attribution: '<a href="http://www.gislan.eus">GISLAN Koop. Elk.</a>' +  ' | ' +  '<a href="http://b5m.gipuzkoa.eus">B5map</a>',
+          maxZoom: 19,
+          tms: true
+        });
+        var basemap_2 = L.tileLayer.wms("http://www.geo.euskadi.eus/WMS_ORTOARGAZKIAK?", {
+          layers: 'ORTO_EGUNERATUENA_MAS_ACTUALIZADA',
+          format: 'image/png',
+          transparent: false,
+          attribution: '<a href="http://www.gislan.eus">GISLAN Koop. Elk.</a>' +  ' | ' + '<a href="http://www.geo.euskadi.eus">geo.euskadi</a>',
+          maxZoom: 19
+        });
+        basemap.addTo(map);
+        function setBounds() {
+        }
+        function geoJson2heat(geojson, weight) {
+          return geojson.features.map(function(feature) {
+            return [
+            feature.geometry.coordinates[1],
+            feature.geometry.coordinates[0],
+            feature.properties[weight]
+            ];
+          });
+        }
+
+  {% for dat in geojsonDatuak %}
+
+  {% with dat.datu_izena|to_azpimarra as name %}
+
+  {% with dat.datuak as gjkargatua %}
+
+  var gjd = {{ gjkargatua }}
+
+  function pop_{{ name }}(feature, layer) {
+    var popupContent = '<table>\
+    <tr>\
+      <td>Cool stuff</td>\
+    </tr>\
+  </table>';
+  layer.bindPopup(popupContent);
+}
+
+{% with 'pane_'|add:name as panela %}
+
+function style_{{ name }}() {
+  return {
+    pane: {{ panela }},
+    radius: 4.0,
+    opacity: 1,
+    color: 'rgba(0,0,0,1.0)',
+    dashArray: '',
+    lineCap: 'butt',
+    lineJoin: 'miter',
+    weight: 1,
+    fillOpacity: 1,
+    fillColor: 'rgba(255,127,0,1.0)',
+  }
+}
+map.createPane({{ panela }});
+map.getPane({{ panela }}).style.zIndex = 405;
+map.getPane({{ panela }}).style['mix-blend-mode'] = 'normal';
+var layer_{{ name }} = new L.geoJson(null, {
+  attribution: '<a href=""></a>',
+  pane: {{ panela }},
+  onEachFeature: pop_{{ name }},
+  pointToLayer: function (feature, latlng) {
+    var context = {
+      feature: feature,
+      variables: {}
+    };
+    return L.circleMarker(latlng, style_{{ name }}(feature))
+  }
+});
+// bounds_group.addLayer(layer_{{ name }});
+
+
+// $.getJSON('postgis_geojson.php?geotable={{dat.datu_izena}}&geomfield=geom', function (data) {
+//     layer_{{ name }}.addData(data);
+//   })
+layer_{{ name }}.addData(gjd);
+
+  //   function (gjd) { 
+  //   layer_{{ name }}.addData(gjd);                          
+  //   geoJson datua
+  // }
+         
+        map.addLayer(layer_{{ name }});
+
+        {% endwith %}
+        {% endwith %}
+        {% endwith %}
+        {% endfor %}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /*L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:27, minZoom:1
+        }).fitBounds([[43.047892, -2.433628],[43.021919, -2.391142]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.addAttribution('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a>');
+    L.control.locate().addTo(map);
+    var measureControl = new L.Control.Measure({
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        var bounds_group = new L.featureGroup([]);
+        var basemap = L.tileLayer('http://b5m.gipuzkoa.eus/api/1.0/es/osgeo/tms/tileset/1.0.0/map/{z}/{x}/{y}.png', {
+    attribution: '<a href="http://www.gislan.eus">GISLAN Koop. Elk.</a>' +  ' | ' +  '<a href="http://b5m.gipuzkoa.eus">B5map</a>',
+    maxZoom: 19,
+    tms: true
+    });
+    var basemap_2 = L.tileLayer.wms("http://www.geo.euskadi.eus/WMS_ORTOARGAZKIAK?", {
+      layers: 'ORTO_EGUNERATUENA_MAS_ACTUALIZADA',
+      format: 'image/png',
+      transparent: false,
+      attribution: '<a href="http://www.gislan.eus">GISLAN Koop. Elk.</a>' +  ' | ' + '<a href="http://www.geo.euskadi.eus">geo.euskadi</a>',
+      maxZoom: 19
+    });
+        basemap.addTo(map);
+        function setBounds() {
+        }
+        function geoJson2heat(geojson, weight) {
+          return geojson.features.map(function(feature) {
+            return [
+              feature.geometry.coordinates[1],
+              feature.geometry.coordinates[0],
+              feature.properties[weight]
+            ];
+          });
+        }*/
