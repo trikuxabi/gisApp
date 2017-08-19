@@ -106,6 +106,8 @@ def getData(gis_id, dbizena, dberab, dbpasahitza, dbhelb, dbportua, dbtaula, ere
 		rowOutput = ""
 		i += 1
 
+	dbtaulaizena = dbtaula.replace(".","_")
+
 	# Assemble the GeoJSON
 	totalOutput = '{ "type": "FeatureCollection", "features": [ ' + output + ' ]}'
 	#with open(dbtaula + '.geojson', 'w') as outfile:
@@ -114,7 +116,7 @@ def getData(gis_id, dbizena, dberab, dbpasahitza, dbhelb, dbportua, dbtaula, ere
 	
 
 	kon = Konexioa.objects.get(id = gis_id)
-	gj = GeojsonDatua(datu_izena = dbtaula + '.geojson', konexioa = kon, datuak = totalOutput)
+	gj = GeojsonDatua(datu_izena = dbtaulaizena + '.geojson', konexioa = kon, datuak = totalOutput)
 	gj.save()
 
 	#outfile.close()
