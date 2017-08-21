@@ -127,7 +127,8 @@ function style_{{ name }}() {
     lineJoin: 'miter',
     weight: 1,
     fillOpacity: 1,
-    fillColor: colors[i%15],
+    fillColor: 'rgba(0,0,0,1.0)',
+    //fillColor: colors[i%15],
   }
 }
 
@@ -161,8 +162,14 @@ var {{ geruza }} = new L.geoJson(null, {
 
 
 
-  {% elif 'MultiPoint' in gjkargatua %}
-
+  {% elif 'Point' in gjkargatua %}
+  pointToLayer: function (feature, latlng) {
+    var context = {
+      feature: feature,
+      variables: {}
+    };
+    return L.circleMarker(latlng, style_{{ name }}(feature))
+  }
 
   {% elif 'MultiLineString' in gjkargatua %}
 
@@ -179,7 +186,10 @@ mymap.addLayer({{ geruza }});
 
 {{ gjkargatua }}
 
-{{ geruza }}.addData({{name}});
+L.geoJSON({{name}}, {
+  onEachFeature: pop_{{ name }}
+}).addTo(mymap);
+
 
 {% endautoescape %}
 
