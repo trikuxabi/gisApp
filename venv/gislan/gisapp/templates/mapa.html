@@ -175,9 +175,14 @@ var {{ geruza }} = new L.geoJson(null, {
 
 mymap.addLayer({{ geruza }});
 
+{% autoescape off %}
+
 {{ gjkargatua }}
 
 {{ geruza }}.addData({{name}});
+
+{% endautoescape %}
+
 i++;
 
 {% endwith %}
