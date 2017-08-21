@@ -8,6 +8,7 @@ from gisapp.forms import KonexioFormularioa, fitxategiaKargatu
 import gisapp.postgis2geojson
 import gisapp.readGeo
 import psycopg2
+import gc
 
 def index(request):
 	view = "index"
@@ -74,11 +75,19 @@ def menua(request, gis_id):
 def mapa(request, gis_id):
 	gis_obj = Konexioa.objects.get(id=gis_id)
 	if request.user == gis_obj.jabea:
-		datuak = GeojsonDatua.objects.filter(konexioa = gis_obj).order_by('datu_izena')
+		datuak = GeojsonDatua.objects.filter(konexioa = gis_obj).iterator()
+
+		#list(datuak)
+		# datuak = list()
+		# denak = GeojsonDatua.objects.all()
+		# for d in denak:
+		# 	if d.konexioa == gis_obj:
+		# 		datuak.append(d)
 		#lista = []
 		# for d in datuak:
 		# 	geostr = gisapp.readGeo.readGeo(d)
 		# 	lista.append(geostr)
+		
 		view = "mapa"
 		return render(request, "mapa.html", {'geojsonDatuak': datuak})
 	else:

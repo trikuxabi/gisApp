@@ -109,7 +109,7 @@ def getData(gis_id, dbizena, dberab, dbpasahitza, dbhelb, dbportua, dbtaula, ere
 	dbtaulaizena = dbtaula.replace(".","_")
 
 	# Assemble the GeoJSON
-	totalOutput = '{ "type": "FeatureCollection", "features": [ ' + output + ' ]}'
+	totalOutput = 'var ' + dbtaulaizena + ' = { "type": "FeatureCollection", "features": [ ' + output + ' ]};'
 	#with open(dbtaula + '.geojson', 'w') as outfile:
 	#	outfile.write(totalOutput)
 

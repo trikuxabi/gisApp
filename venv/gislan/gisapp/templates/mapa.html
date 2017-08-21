@@ -3,72 +3,74 @@
 <html>
 
 <head>
-	<meta charset="utf-8" />
-  <title>Gislan - Gisapp</title>
-  {% load static %}
-  <link rel="stylesheet" type="text/css" href="{% static 'mapstyle.css' %}"/>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css"
-  integrity="sha512-wcw6ts8Anuw10Mzh9Ytw4pylW8+NAD4ch3lqm9lzAsTxg0GFeJgoAtxuCLREZSC5lUXdVyo/7yfsqFjQ4S+aKw=="
-  crossorigin=""/>
-  <script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet.js"
-  integrity="sha512-mNqn2Wg7tSToJhvHcqfzLMU6J4mkOImSPTxVZAdo+lcPlk+GhZmYgACEe0x35K7YzW1zJ7XyJV/TT1MrdXvMcA=="
-  crossorigin=""></script>
+<meta charset="utf-8" />
+<title>Gislan - Gisapp</title>
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'mapstyle.css' %}"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css"
+integrity="sha512-wcw6ts8Anuw10Mzh9Ytw4pylW8+NAD4ch3lqm9lzAsTxg0GFeJgoAtxuCLREZSC5lUXdVyo/7yfsqFjQ4S+aKw=="
+crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet.js"
+integrity="sha512-mNqn2Wg7tSToJhvHcqfzLMU6J4mkOImSPTxVZAdo+lcPlk+GhZmYgACEe0x35K7YzW1zJ7XyJV/TT1MrdXvMcA=="
+crossorigin=""></script>
 </head>
 
 
 <body>
-  <div id="map">
-  </div>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-  <script src="{% static 'qgis2web_expressions.js' %}"></script>
-  <script src="{% static 'leaflet.js' %}"></script>
-  <script src="{% static 'L.Control.Locate.min.js' %}"></script>
-  <script src="{% static 'leaflet-heat.js' %}"></script>
-  <script src="{% static 'leaflet.rotatedMarker.js' %}"></script>
-  <script src="{% static 'OSMBuildings-Leaflet.js' %}"></script>
-  <script src="{% static 'leaflet-hash.js' %}"></script>
-  <script src="{% static 'leaflet-tilelayer-wmts.js' %}"></script>
-  <script src="{% static 'Autolinker.min.js' %}"></script>
-  <script src="{% static 'leaflet-measure.js' %}"></script>
-  <script src="{% static 'leaflet.markercluster.js' %}"></script>
-  <script src="{% static 'leaflet-search.js' %}"></script>
-  <script src="{% static 'styledLayerControl.js' %}"></script>
-
-  <script>
-
-
-    var colors = ["rgba(0,0,0,1.0)", "rgba(255,0,0,1.0)", "rgba(0,255,0,1.0)", "rgba(0,0,255,1.0)", "rgba(255,255,0,1.0)", "rgba(0,255,255,1.0)", "rgba(255,0,255,1.0)", "rgba(192,192,192,1.0)", "rgba(128,128,128,1.0)","rgba(128,0,0,1.0)", "rgba(128,128,0,1.0)", "rgba(0,128,0,1.0)", "rgba(128,0,128,1.0)", "rgba(0,128,128,1.0)", "rgba(0,0,128,1.0)"];
 
 
 
+<div id="mapid">
+</div>
+
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="{% static 'qgis2web_expressions.js' %}"></script>
+<script src="{% static 'leaflet.js' %}"></script>
+<script src="{% static 'L.Control.Locate.min.js' %}"></script>
+<script src="{% static 'leaflet-heat.js' %}"></script>
+<script src="{% static 'leaflet.rotatedMarker.js' %}"></script>
+<script src="{% static 'OSMBuildings-Leaflet.js' %}"></script>
+<script src="{% static 'leaflet-hash.js' %}"></script>
+<script src="{% static 'leaflet-tilelayer-wmts.js' %}"></script>
+<script src="{% static 'Autolinker.min.js' %}"></script>
+<script src="{% static 'leaflet-measure.js' %}"></script>
+<script src="{% static 'leaflet.markercluster.js' %}"></script>
+<script src="{% static 'leaflet-search.js' %}"></script>
+<script src="{% static 'styledLayerControl.js' %}"></script>
 
 
 
 
+<script>
 
-// GISLANen MAPA KODEA 
 
-/*L.ImageOverlay.include({
+var i = 0;
+
+var colors = ["rgba(0,0,0,1.0)", "rgba(255,0,0,1.0)", "rgba(0,255,0,1.0)", "rgba(0,0,255,1.0)", "rgba(255,255,0,1.0)", "rgba(0,255,255,1.0)", "rgba(255,0,255,1.0)", "rgba(192,192,192,1.0)", "rgba(128,128,128,1.0)","rgba(128,0,0,1.0)", "rgba(128,128,0,1.0)", "rgba(0,128,0,1.0)", "rgba(128,0,128,1.0)", "rgba(0,128,128,1.0)", "rgba(0,0,128,1.0)"];
+
+
+var mymap = L.map('mapid').setView([43.033715, -2.414059], 16);
+L.control.locate().addTo(mymap);
+
+L.ImageOverlay.include({
   getBounds: function () {
     return this._bounds;
   }
 });
-var map = L.map('map', {
-  zoomControl:true, maxZoom:27, minZoom:1
-}).fitBounds([[43.1945149134,-2.06929016093],[43.209787148,-2.03202401597]]);
-var hash = new L.Hash(map);
-map.attributionControl.addAttribution('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a>');
-L.control.locate().addTo(map);
 var measureControl = new L.Control.Measure({
   primaryLengthUnit: 'meters',
   secondaryLengthUnit: 'kilometers',
   primaryAreaUnit: 'sqmeters',
   secondaryAreaUnit: 'hectares'
 });
-measureControl.addTo(map);
+measureControl.addTo(mymap);
+
 var bounds_group = new L.featureGroup([]);
+
 var basemap = L.tileLayer('http://b5m.gipuzkoa.eus/api/1.0/es/osgeo/tms/tileset/1.0.0/map/{z}/{x}/{y}.png', {
-  attribution: '<a href="http://www.gislan.eus">GISLAN Koop. Elk.</a>' +  ' | ' +  '<a href="http://b5m.gipuzkoa.eus">B5map</a>',
+  attribution: '<a href="twitter.com/trikuxabi">GisApp by Xabi Linazasoro</a>' +  ' | ' +  '<a href="http://www.gislan.eus">GISLAN Koop. Elk.</a>' +  ' | ' +  '<a href="http://b5m.gipuzkoa.eus">B5map</a>',
   maxZoom: 19,
   tms: true
 });
@@ -79,7 +81,8 @@ var basemap_2 = L.tileLayer.wms("http://www.geo.euskadi.eus/WMS_ORTOARGAZKIAK?",
   attribution: '<a href="http://www.gislan.eus">GISLAN Koop. Elk.</a>' +  ' | ' + '<a href="http://www.geo.euskadi.eus">geo.euskadi</a>',
   maxZoom: 19
 });
-basemap.addTo(map);
+basemap.addTo(mymap);
+
 function setBounds() {
 }
 function geoJson2heat(geojson, weight) {
@@ -90,51 +93,19 @@ function geoJson2heat(geojson, weight) {
     feature.properties[weight]
     ];
   });
-}*/
+}
 
 
-
-
-
-
-// NIRE KODEA
-
-var map = L.map('map').setView([43.033715, -2.414059], 16);
-
-var i = 1;
-
-L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox.satellite',
-    accessToken: 'pk.eyJ1IjoidHJpa3V4YWJpIiwiYSI6ImNqMzQ0bnM5djAwNWYzM3BnbTN5OTZydTUifQ.UT3FBsjGdqH2NuG0JQuOJA'
-}).addTo(map);
-
-
-
-{% for dat in geojsonDatuak %}
-{% with dat.datu_izena|luzapena_kendu as name %}
-{% with dat.datuak as gjkargatua %}
-
-var datu = {{gjkargatua}}
-L.geoJSON(datu).addTo(map);
-
-
-
-
-{% endwith %}
-{% endwith %}
-{% endfor %}
 
 
 
 
 
-/*{% for dat in geojsonDatuak %}
+{% for dat in geojsonDatuak %}
 {% with dat.datu_izena|to_azpimarra as name %}
 {% with dat.datuak as gjkargatua %}
 {% with 'pane_'|add:name as panela %}
-
+{% with 'layer_'|add:name as geruza %}
 
 function pop_{{ name }}(feature, layer) {
   var popupContent = '<table>\
@@ -148,7 +119,7 @@ layer.bindPopup(popupContent);
 function style_{{ name }}() {
   return {
     pane: '{{ panela }}',
-    radius: 4.0,
+    //radius: 4.0,
     opacity: 1,
     color: 'rgba(0,0,0,1.0)',
     dashArray: '',
@@ -160,12 +131,12 @@ function style_{{ name }}() {
   }
 }
 
-map.createPane('{{ panela }}');
-map.getPane('{{ panela }}').style.zIndex = 405;
-map.getPane('{{ panela }}').style['mix-blend-mode'] = 'normal';
-var layer_{{ name }} = new L.geoJson(null, {
+mymap.createPane('{{ panela }}');
+mymap.getPane('{{ panela }}').style.zIndex = 405;
+mymap.getPane('{{ panela }}').style['mix-blend-mode'] = 'normal';
+var {{ geruza }} = new L.geoJson(null, {
   attribution: '<a href=""></a>',
-  pane: {{ panela }},
+  pane: '{{ panela }}',
   onEachFeature: pop_{{ name }},
 
   {% if 'MultiPoint' in gjkargatua %}
@@ -202,83 +173,22 @@ var layer_{{ name }} = new L.geoJson(null, {
 
 });
 
+mymap.addLayer({{ geruza }});
 
+{{ gjkargatua }}
 
-
-map.addLayer(layer_{{ name }});
-
+{{ geruza }}.addData({{name}});
 i++;
 
-
 {% endwith %}
 {% endwith %}
 {% endwith %}
-{% endfor %}*/
+{% endwith %}
+{% endfor %}
 
 
 
+</script>
 
-
-
-
-
-
-
-
-
-
-/*var baseLayers = [
-{ 
-  groupName : "Oinarrizko geruzak",
-  expanded : false,
-  layers    : {
-    "Gipuzkoa b5m": basemap,
-    "Oinarri topografikoa": layer_Lerroak2,
-    "Ortoargazkia": basemap_2,
-            }
-          }                           
-          ];
-
-          var groupedOverlays = [
-          {
-            groupName : "Intzidentziak",
-            expanded  : false,
-            layers    : { 
-
-              'Intzidentziak<br /><table><tr><td style="text-align: center;"><img src="legend/Intz0_Konponduta0.png" /></td><td>Konponduta</td></tr><tr><td style="text-align: center;"><img src="legend/Intz0_Konpondugabe1.png" /></td><td>Konpondu gabe</td></tr></table>': layer_Intz0,
-              
-            }   
-          }
-          ,{
-            groupName : "36ko gerra",
-            expanded  : false,
-            layers    : { 
-
-              '<img src="legend/36kogerrakoelementuak20.png" /> 36ko gerrako elementuak': layer_36kogerrakoelementuak20,
-              
-            }   
-          }]
-
-
-          var layerControlOptions = {
-            container_width     : "250px",
-            group_maxHeight     : "300px",
-            exclusive           : false,
-          };
-
-          var layerControl = L.Control.styledLayerControl(baseLayers, groupedOverlays, layerControlOptions);
-          map.addControl(layerControl); */
-
-
-
-
-          /*map.addControl(new L.Control.Search({
-            layer: layer_Testuak0,
-            initial: false,
-            hideMarkerOnCollapse: true,
-            propertyName: 'textstring'}));*/
-
-          </script>
-
-        </body>
-        </html>
+</body>
+</html>

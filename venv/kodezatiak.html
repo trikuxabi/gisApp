@@ -1,0 +1,149 @@
+
+
+/*{% for dat in geojsonDatuak %}
+{% with dat.datu_izena|to_azpimarra as name %}
+{% with dat.datuak as gjkargatua %}
+{% with 'pane_'|add:name as panela %}
+
+
+function pop_{{ name }}(feature, layer) {
+  var popupContent = '<table>\
+  <tr>\
+    <td>Cool stuff</td>\
+  </tr>\
+</table>';
+layer.bindPopup(popupContent);
+}
+
+function style_{{ name }}() {
+  return {
+    pane: '{{ panela }}',
+    radius: 4.0,
+    opacity: 1,
+    color: 'rgba(0,0,0,1.0)',
+    dashArray: '',
+    lineCap: 'butt',
+    lineJoin: 'miter',
+    weight: 1,
+    fillOpacity: 1,
+    fillColor: colors[i%15],
+  }
+}
+
+map.createPane('{{ panela }}');
+map.getPane('{{ panela }}').style.zIndex = 405;
+map.getPane('{{ panela }}').style['mix-blend-mode'] = 'normal';
+var layer_{{ name }} = new L.geoJson(null, {
+  attribution: '<a href=""></a>',
+  pane: {{ panela }},
+  onEachFeature: pop_{{ name }},
+
+  {% if 'MultiPoint' in gjkargatua %}
+  pointToLayer: function (feature, latlng) {
+    var context = {
+      feature: feature,
+      variables: {}
+    };
+    return L.circleMarker(latlng, style_{{ name }}(feature))
+  }
+
+  {% elif 'MultiPolygon' in gjkargatua %}
+  style: 'style_{{ name }}'
+
+
+
+  {% elif 'LineString' in gjkargatua %}
+
+
+
+  {% elif 'Polygon' in gjkargatua %}
+
+
+
+  {% elif 'MultiPoint' in gjkargatua %}
+
+
+  {% elif 'MultiLineString' in gjkargatua %}
+
+
+  {% endif %}
+
+
+
+});
+
+
+
+
+map.addLayer(layer_{{ name }});
+
+i++;
+
+
+{% endwith %}
+{% endwith %}
+{% endwith %}
+{% endfor %}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*var baseLayers = [
+{ 
+  groupName : "Oinarrizko geruzak",
+  expanded : false,
+  layers    : {
+    "Gipuzkoa b5m": basemap,
+    "Oinarri topografikoa": layer_Lerroak2,
+    "Ortoargazkia": basemap_2,
+            }
+          }                           
+          ];
+
+          var groupedOverlays = [
+          {
+            groupName : "Intzidentziak",
+            expanded  : false,
+            layers    : { 
+
+              'Intzidentziak<br /><table><tr><td style="text-align: center;"><img src="legend/Intz0_Konponduta0.png" /></td><td>Konponduta</td></tr><tr><td style="text-align: center;"><img src="legend/Intz0_Konpondugabe1.png" /></td><td>Konpondu gabe</td></tr></table>': layer_Intz0,
+              
+            }   
+          }
+          ,{
+            groupName : "36ko gerra",
+            expanded  : false,
+            layers    : { 
+
+              '<img src="legend/36kogerrakoelementuak20.png" /> 36ko gerrako elementuak': layer_36kogerrakoelementuak20,
+              
+            }   
+          }]
+
+
+          var layerControlOptions = {
+            container_width     : "250px",
+            group_maxHeight     : "300px",
+            exclusive           : false,
+          };
+
+          var layerControl = L.Control.styledLayerControl(baseLayers, groupedOverlays, layerControlOptions);
+          map.addControl(layerControl); */
+
+
+
+
+          /*map.addControl(new L.Control.Search({
+            layer: layer_Testuak0,
+            initial: false,
+            hideMarkerOnCollapse: true,
+            propertyName: 'textstring'}));*/
